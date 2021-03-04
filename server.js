@@ -170,3 +170,16 @@ app.get('/admin/list/', (req,res) => {
           res.status(200).json(docs)
         }) 
     })
+
+
+//******************* */  API Authentification //******************* */
+app.get('/users/:email', async (req,res) => {
+      try {
+          const email = req.params.email;
+          const user = await db.collection('users').findOne({email})
+          res.status(200).json(user)
+      } catch (err) {
+          console.log(err)
+          throw err
+      } 
+    })
