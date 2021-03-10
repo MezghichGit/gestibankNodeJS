@@ -4,6 +4,7 @@ const cors = require("cors");
 
 app.use(express.json());
 
+var nodemailer = require('nodemailer');
 
 var corsOptions = {
     //origin: "http://localhost:4200"
@@ -18,6 +19,33 @@ app.listen(
     ()=>{console.log("Serveur Express a l ecoute sur le port 85");}
 );
 
+//// send email //////////////////////////////////////////////////// 
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'gestibank2021@gmail.com',
+      pass: 'gkmars2021'
+    }
+  });
+  
+  var mailClient = "amine.mezghich@gmail.com";
+  var password = "abc123";
+  var mailOptions = {
+    from: 'gestibank2021@gmail.com',
+    to: 'amine.mezghich@ensi-uma.tn',
+    subject: 'Validation de création de compte GestiBank',
+    text: 'Félicitations votre compte a été créer avec succès Login : '+ mailClient +" Votre mot de passe :"+password
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+  
+///////////////////////////////////////////////////
 // connexion de notre serveur à la base mongo
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
